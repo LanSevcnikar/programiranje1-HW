@@ -8,7 +8,7 @@ class DN08_363210292 {
     private String letoIzdaje;
     private String ISBN;
 
-    private double steviloTock;
+    public double steviloTock;
     private String tockeString;
 
     private int index;
@@ -53,7 +53,7 @@ class DN08_363210292 {
     private int zacetnaStran;
     private int koncnaStran;
     private int index;
-    private double steviloTock;
+    public double steviloTock;
     private String tockeString;
 
     public Referat(
@@ -102,33 +102,42 @@ class DN08_363210292 {
     private String[] avtorji;
     private String naslov;
     private String nazivRevije;
-    private String stevilkaRevije;
+    private int stevilkaRevije;
     private String letoIzdaje;
-    private String odmevnostRevije;
+    private int odmevnostRevije;
+    private String letnik;
     private int zacetnaStran;
     private int koncnaStran;
     private int index;
-    private int steviloTock;
+    public int steviloTock;
 
     public Clanek(
         int index,
         String[] avtorji,
         String naslov,
         String nazivRevije,
-        String stevilkaRevije,
+        String letnik,
+        int stevilkaRevije,
         String letoIzdaje,
-        String odmevnostRevije,
+        int odmevnostRevije,
         int zacetnaStran,
         int koncnaStran) {
       this.index = index;
       this.avtorji = avtorji;
       this.naslov = naslov;
+      this.letnik = letnik;
       this.nazivRevije = nazivRevije;
       this.stevilkaRevije = stevilkaRevije;
       this.letoIzdaje = letoIzdaje;
       this.odmevnostRevije = odmevnostRevije;
       this.zacetnaStran = zacetnaStran;
       this.koncnaStran = koncnaStran;
+
+      double p = ((double)this.stevilkaRevije / (double)this.odmevnostRevije);
+      int tockovnaOsnova = 0;
+      if(p <= 0.25){
+        tockovnaOsnova = 10;
+      }
       this.steviloTock = 2;
     }
 
@@ -137,7 +146,7 @@ class DN08_363210292 {
       for (String avtor : avtorji) {
         temp += avtor + ", ";
       }
-      return String.format("%s: %s. %s %s(%s): %d-%d (%s) | %s", temp, this.naslov, this.nazivRevije, this.letoIzdaje,
+      return String.format("%s: %s. %s %s(%s): %d-%d (%s) | %s", temp, this.naslov, this.nazivRevije, this.letnik,
           this.stevilkaRevije,
           this.zacetnaStran, this.koncnaStran, this.letoIzdaje, this.steviloTock);
     }
@@ -178,14 +187,14 @@ class DN08_363210292 {
       if (tp.equals("clanek")) {
         String nazivRevije = sc.next();
         String letnikRevije = sc.next();
-        String stevilkaRevije = sc.next();
+        int stevilkaRevije = sc.nextInt();
         String letnikIzdaje = sc.next();
-        String odmevnostRevije = sc.next();
+        int odmevnostRevije = sc.nextInt();
         String steviloOdmevnosti = sc.next();
         int zacetnaStran = sc.nextInt();
         int koncnaStran = sc.nextInt();
-        objave[t] = new Clanek(t, avtorji, nazivRevije, letnikRevije, stevilkaRevije, letnikIzdaje, odmevnostRevije,
-            zacetnaStran, koncnaStran);
+        objave[t] = new Clanek(t, avtorji, naslov, nazivRevije, letnikRevije, stevilkaRevije, letnikIzdaje,
+            odmevnostRevije, zacetnaStran, koncnaStran);
       }
     }
     sc.close();
